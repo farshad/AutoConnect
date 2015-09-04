@@ -1,0 +1,10 @@
+#!/usr/bin/except
+spawn -noecho ssh [lindex $argv 0]@[lindex $argv 1] -p[lindex $argv 2]
+set timeout 30
+expect {
+    "(yes/no)" { send "yes\n" ; exp_continue }
+    "(y/n)" {  send "y\n" ; exp_continue }
+    *assword { send "[lindex $argv 3]\n" ; exp_continue }
+    "Last login" { interact }
+    "Permission denied" { puts "Accsess denied!" ; exit 1 }
+}
