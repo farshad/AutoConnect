@@ -1,4 +1,3 @@
 # AutoConnect
 ##Requirements
-1. expect
-- Ubuntu: sudo apt-get install expect
+- expect (sudo apt-get install expect)
