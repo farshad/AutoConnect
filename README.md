@@ -1,4 +1,4 @@
 # AutoConnect
-==Requirements==
-expect
-Ubuntu: sudo apt-get install expect
+##Requirements
+1. expect
+⋅⋅* Ubuntu: sudo apt-get install expect
