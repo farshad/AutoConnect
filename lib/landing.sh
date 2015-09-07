@@ -5,8 +5,8 @@ home(){
 
 	echo "1. Mount"
 	echo "2. UnMount"
-	echo "3. ssh"
-	echo "4. manage"
+	echo "3. SSH"
+	echo "4. Manage"
 	echo ""
 	echo -n ":> "
 	read type
@@ -19,7 +19,7 @@ home(){
 	           ;;
            4 ) manage
            ;;
-	       * ) clear && echo "type is not defined." && exit 0
+	       * ) clear && echo "Type is not defined." && exit 0
 	   esac
 	sleep 1s
 	clear

@@ -7,13 +7,13 @@ alias_list(){
 	while [[ " ${alias_array[*]} " != *" ${alias_array[$((id-1))]} "* ]]; do
 		if [[ $id != 10000000000 ]]; then
 			clear
-			echo "please select correct option!"
+			echo "Please select correct option!"
 		fi
 		for i in "${!alias_array[@]}"; do 
-			printf "%s.%s\n" $((i+1)) "${alias_array[$i]}"
+			printf "%s. %s\n" $((i+1)) "${alias_array[$i]}"
 		done
 		echo ""
-		printf "%s.%s\n" 0 "back to home"
+		printf "%s. %s\n" 0 "Back to home"
 		echo -n ":> "
 		read id
 		if [[ $id == 0 ]]; then
@@ -26,7 +26,7 @@ alias_list(){
 servers_check(){
 	clear
 	if [ "${#alias_array[@]}" -eq 0 ]; then
-		clear && echo "server not found, please add new server." && sleep 2s && manage;
+		clear && echo "Server not found, please add new server." && sleep 2s && manage;
 	fi
 }
 
@@ -36,14 +36,14 @@ add(){
 	if [ ! -f ./lib/config.sh ]; then
 		echo "config file no found"
 	    touch ./lib/config.sh 
-	    echo "config.sh generated! please don't modify or delete this file"
+	    echo "Config.sh generated! please don't modify or delete this file"
 	fi
 	config_file="./lib/config.sh"
 
 	# read server data
 	while [ -z "$alias" ]
 	do
-		echo -n "enter server alias: "
+		echo -n "Enter server alias: "
   		read alias
   		if [[ " ${alias_array[*]} " == *" $alias "* ]]; then 
   			clear && echo "Err: $alias is exists!" && alias=""; 
@@ -51,23 +51,23 @@ add(){
 	done
 	while [ -z "$ip" ]
 	do
-		echo -n "enter server ip: "
+		echo -n "Enter server ip: "
   		read ip
 	done
 
-	echo -n "enter port(default 22): "
+	echo -n "Enter port(default 22): "
   	read port
   	#if port null set 22
   	if [ -z "$port" ]; then port=22; fi
 
 	while [ -z "$user" ]
 	do
-		echo -n "enter username: "
+		echo -n "Enter username: "
   		read user
 	done
 	while [ -z "$pass" ]
 	do
-		echo -n "enter password: "
+		echo -n "Enter password: "
 		read -s pass
 	done
 
@@ -95,7 +95,7 @@ add(){
 #delete server from config file
 delete(){
 	servers_check
-	echo "select server to remove: "
+	echo "Select server to remove: "
 	echo ""
 	alias_list
 	#unmount
@@ -115,7 +115,7 @@ manage(){
 	echo "1. Add"
 	echo "2. Delete"
 	echo ""
-	echo "0. back to home"
+	echo "0. Back to home"
 	echo -n ":> "
 	read type
 	   case $type in
@@ -125,7 +125,7 @@ manage(){
 	           ;;
            0 ) home
            ;;
-	       * ) clear && echo ">>Err: type is not defined."  && sleep 2s && manage
+	       * ) clear && echo ">>Error: Type is not defined."  && sleep 2s && manage
 	   esac
 	sleep 1s
 	clear
@@ -134,7 +134,7 @@ manage(){
 #ssh to server
 try_ssh(){
 	servers_check
-	echo "select server for ssh: "
+	echo "Select server for ssh: "
 	echo ""
 	alias_list
 	user=${arr[${alias_array[$((id-1))]},user]}
@@ -148,7 +148,7 @@ try_ssh(){
 #mount server with sshfs
 try_sshfs(){
 	servers_check
-	echo "select server for mount: "
+	echo "Select server for mount: "
 	echo ""
 	alias_list
 	point=${alias_array[$((id-1))]}
@@ -159,7 +159,7 @@ try_sshfs(){
     #unmount if mounted
     fusermount -u /mnt/$point
     clear
-    echo "> please wait..."
+    echo "> Please wait..."
 	echo "$pass" | sshfs $user@$ip:/ /mnt/$point -p$port -o password_stdin
 	clear
 }
@@ -167,7 +167,7 @@ try_sshfs(){
 #unmount server
 try_fusermount(){
 	servers_check
-	echo "select server for unmount: "
+	echo "Select server for unmount: "
 	echo ""
 	alias_list
 	fusermount -u /mnt/${alias_array[$((id-1))]}
