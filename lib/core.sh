@@ -148,19 +148,44 @@ try_ssh(){
 #mount server with sshfs
 try_sshfs(){
 	servers_check
+
 	echo "Select server for mount: "
 	echo ""
+
 	alias_list
 	point=${alias_array[$((id-1))]}
-    user=${arr[${alias_array[$((id-1))]},user]}
-    ip=${arr[${alias_array[$((id-1))]},ip]}
-    port=${arr[${alias_array[$((id-1))]},port]}
-    pass=${arr[${alias_array[$((id-1))]},pass]}
-    #unmount if mounted
-    fusermount -u /mnt/$point
-    clear
-    echo "> Please wait..."
+	user=${arr[${alias_array[$((id-1))]},user]}
+	ip=${arr[${alias_array[$((id-1))]},ip]}
+	port=${arr[${alias_array[$((id-1))]},port]}
+	pass=${arr[${alias_array[$((id-1))]},pass]}
+	#unmount if mounted
+	fusermount -u /mnt/$point
+	clear
+	echo "> Please wait..."
 	echo "$pass" | sshfs $user@$ip:/ /mnt/$point -p$port -o password_stdin
+	clear
+}
+
+# Mount all servers with sshfs
+try_mount_all(){
+	servers_check
+
+	clear
+	echo "> Please wait..."
+
+	for i in "${!alias_array[@]}"; do
+		point=${alias_array[$i]}
+		user=${arr[${alias_array[$i]},user]}
+		ip=${arr[${alias_array[$i]},ip]}
+		port=${arr[${alias_array[$i]},port]}
+		pass=${arr[${alias_array[$i]},pass]}
+
+		#unmount if mounted
+		fusermount -u /mnt/$point >/dev/null 2>/dev/null
+
+		echo "$pass" | sshfs $user@$ip:/ /mnt/$point -p$port -o password_stdin
+	done
+
 	clear
 }
 
@@ -171,4 +196,15 @@ try_fusermount(){
 	echo ""
 	alias_list
 	fusermount -u /mnt/${alias_array[$((id-1))]}
+}
+
+# Unmount all servers
+try_unmount_all(){
+	servers_check
+
+	for i in "${!alias_array[@]}"; do
+		fusermount -u /mnt/${alias_array[$i]} >/dev/null 2>/dev/null
+	done
+
+	clear
 }
