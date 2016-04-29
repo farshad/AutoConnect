@@ -1,6 +1,8 @@
 #!/bin/bash
-source ./lib/config.sh 
+config_file="/var/lib/autoconnect/config.sh"
 input_id=$2
+source /var/lib/autoconnect/config.sh
+
 #return server alias list
 alias_list(){
 	if [ -z "$input_id" ]
@@ -42,12 +44,11 @@ servers_check(){
 #add server to config file
 add(){
 	clear
-	if [ ! -f ./lib/config.sh ]; then
+	if [ ! -f config_file ]; then
 		echo "config file no found"
-	    touch ./lib/config.sh 
+	    touch config_file 
 	    echo "Config.sh generated! please don't modify or delete this file"
 	fi
-	config_file="./lib/config.sh"
 
 	# read server data
 	while [ -z "$alias" ]
@@ -110,7 +111,7 @@ delete(){
 	#unmount
 	fusermount -u /mnt/"${alias_array[$((id-1))]}"
 	clear
-	grep -v "${alias_array[$((id-1))]}" ./lib/config.sh > ./lib/.temp.sh && mv -f ./lib/.temp.sh ./lib/config.sh
+	grep -v "${alias_array[$((id-1))]}" /var/lib/autoconnect/config.sh > /var/lib/autoconnect/.temp.sh && mv -f /var/lib/autoconnect/.temp.sh /var/lib/autoconnect/config.sh
 	if [ -d "/mnt/${alias_array[$((id-1))]}" ]; then
 	  sudo rm -rf /mnt/"${alias_array[$((id-1))]}"
 	fi
@@ -151,7 +152,7 @@ try_ssh(){
 	port=${arr[${alias_array[$((id-1))]},port]}
 	pass=${arr[${alias_array[$((id-1))]},pass]}
 
-	expect ./lib/ssh.exp "$user" "$ip" "$port" "$pass"
+	expect /var/lib/autoconnect/ssh.exp "$user" "$ip" "$port" "$pass"
 }
 
 #mount server with sshfs

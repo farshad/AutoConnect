@@ -1,4 +1,4 @@
-#!/usr/bin/except
+#!/usr/bin/expect
 spawn -noecho ssh [lindex $argv 0]@[lindex $argv 1] -p[lindex $argv 2]
 set timeout 30
 expect {

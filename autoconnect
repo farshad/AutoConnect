@@ -1,6 +1,6 @@
 #!/bin/bash
-source ./lib/core.sh
-source ./lib/landing.sh 
+source /var/lib/autoconnect/core.sh
+source /var/lib/autoconnect/landing.sh 
 
 while getopts "h|m" opt; do
   case $opt in
