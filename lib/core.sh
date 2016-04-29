@@ -1,21 +1,30 @@
 #!/bin/bash
 source ./lib/config.sh 
-
+input_id=$2
 #return server alias list
 alias_list(){
-	id=10000000000
+	if [ -z "$input_id" ]
+		then
+		id=10000000000
+	fi
 	while [[ " ${alias_array[*]} " != *" ${alias_array[$((id-1))]} "* ]]; do
-		if [[ $id != 10000000000 ]]; then
+		if ([ -z "$input_id" ] || [ -z "$id" ] || [ $id != 10000000000 ]); then
 			clear
 			echo "Please select correct option!"
 		fi
 		for i in "${!alias_array[@]}"; do 
 			printf "%s. %s\n" $((i+1)) "${alias_array[$i]}"
 		done
-		echo ""
-		printf "%s. %s\n" 0 "Back to home"
-		echo -n ":> "
-		read id
+
+		if [ -z "$input_id" ]
+	  		then
+			echo ""
+			printf "%s. %s\n" 0 "Back to home"
+			echo -n ":> "
+			read id
+		else
+			id=input_id
+		fi
 		if [[ $id == 0 ]]; then
 			home
 		fi

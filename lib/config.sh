@@ -6,3 +6,4 @@
 
 alias_array=()
 declare -A arr
+
