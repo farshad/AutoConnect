@@ -1,0 +1,51 @@
+#!/usr/bin/make -f
+
+script = $(CURDIR)/autoconnect
+lib = $(CURDIR)/lib/*
+
+DEST1 = $(CURDIR)/debian/autoconnect/var/lib/autoconnect
+DEST2 = $(CURDIR)/debian/autoconnect/usr/sbin
+
+build: build-stamp
+
+build-stamp:
+	dh_testdir
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	dh_clean
+
+install: build clean $(lib) $(script)
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	mkdir -m 755 -p $(DEST1)
+	mkdir -m 755 -p $(DEST2)
+
+	install -m 777 $(lib) $(DEST1)
+	install -m 777 $(script) $(DEST2)
+
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_installdocs
+	dh_installexamples
+	dh_installman
+	dh_link
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-arch: build install
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install
