@@ -44,9 +44,9 @@ servers_check(){
 #add server to config file
 add(){
 	clear
-	if [ ! -f config_file ]; then
+	if [ ! -f /var/lib/autoconnect/config.sh ]; then
 		echo "config file no found"
-	    touch config_file 
+	    touch /var/lib/autoconnect/config.sh 
 	    echo "Config.sh generated! please don't modify or delete this file"
 	fi
 

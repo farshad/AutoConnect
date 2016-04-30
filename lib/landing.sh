@@ -1,7 +1,7 @@
 #!/bin/bash
 
 home(){
-	if [ -z "$1" ] || [ -z "$2" ]
+	if [ -z "$1" ]
 	  then
 	  	clear
 		echo "   _         _          ___                            _   "

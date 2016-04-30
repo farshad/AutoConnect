@@ -26,7 +26,7 @@ while getopts "h|m" opt; do
   esac
 done
 
-if [ -z "$1" ] || [ -z "$2" ]
+if [ -z "$1" ]
   then
     echo "No argument supplied"
     exit 1
